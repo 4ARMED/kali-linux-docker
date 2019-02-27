@@ -21,6 +21,7 @@ RUN set -x \
         openssh-client \
         git \
         gnupg \
+        jq \
     && apt-get clean -yqq
 RUN set -x && \
     pip install awscli crcmod && \
