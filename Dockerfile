@@ -25,7 +25,10 @@ RUN set -x \
     && apt-get clean -yqq
 RUN set -x && \
     pip install awscli crcmod && \
-    export CLOUD_SDK_REPO="cloud-sdk-stretch" && \
+    mkdir /root/.aws && \
+    echo '[default]\nregion = eu-west-1' > /root/.aws/config
+
+RUN export CLOUD_SDK_REPO="cloud-sdk-stretch" && \
     echo "deb https://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" > /etc/apt/sources.list.d/google-cloud-sdk.list && \
     curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
     apt-get update -yqq && apt-get install -y google-cloud-sdk=${CLOUD_SDK_VERSION}-0 $INSTALL_COMPONENTS && \
