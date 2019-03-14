@@ -38,7 +38,10 @@ RUN export CLOUD_SDK_REPO="cloud-sdk-stretch" && \
     gcloud config set component_manager/disable_update_check true && \
     gcloud config set metrics/environment github_docker_image
 
-RUN wget -O /usr/local/bin/kubeletmein https://github.com/4ARMED/kubeletmein/releases/download/v${KUBELETMEIN_VERSION}/kubeletmein_${KUBELETMEIN_VERSION}_linux_amd64 && \
+RUN curl -sL https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl && \
+    chmod +x /usr/local/bin/kubectl
+
+RUN curl -sL https://github.com/4ARMED/kubeletmein/releases/download/v${KUBELETMEIN_VERSION}/kubeletmein_${KUBELETMEIN_VERSION}_linux_amd64 -o /usr/local/bin/kubeletmein && \
     chmod +x /usr/local/bin/kubeletmein
 
 CMD ["bash"]
